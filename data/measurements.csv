@@ -1,0 +1,141 @@
+category,config,metric,value,unit,notes
+power,stock,current_power_limit,80,W,base TGP as shipped on Linux
+power,stock,default_power_limit,80,W
+power,stock,max_power_limit,175,W,hardware capability
+power,stock,sm_clock_steady,1230-1335,MHz,under sustained load
+power,stock,power_draw_load,79.7-80.2,W,pinned at the wall
+power,stock,temperature,54-61,C
+power,after_nvidia_powerd,current_power_limit,105,W,base + 25W Dynamic Boost
+power,after_msi_ec_turbo,current_power_limit,150,W,EC shift mode = turbo
+power,after_sustained_load,current_power_limit,175,W,ceiling reached
+power,after_full_unlock,sm_clock_steady,2400,MHz
+power,after_full_unlock,power_draw_load,145-148,W
+power,after_full_unlock,temperature,65-72,C
+power,cooler_boost_on,peak_temperature,78,C,forced max fan
+power,cooler_boost_off,peak_temperature,76,C,EC automatic curve
+power,cooler_boost_on,peak_power,166,W
+power,cooler_boost_off,peak_power,147,W
+power,clock_lock_reverted,idle_power_locked,35,W,with -lgc clock floor
+power,clock_lock_reverted,idle_power_default,7,W,without clock lock
+moE_prefill,baseline_auto,wall_time,20.8,s,42K-token cold prompt
+moE_prefill,baseline_auto,throughput,2000,tok/s,approximate
+moE_prefill,maxfetch_64,wall_time,16.7,s
+moE_prefill,maxfetch_128_run1,wall_time,14.2,s
+moE_prefill,maxfetch_128_run2,wall_time,12.7,s
+moE_prefill,maxfetch_128_run3,wall_time,13.7,s
+moE_prefill,maxfetch_128_run4,wall_time,13.7,s
+moE_prefill,maxfetch_128,throughput,3090,tok/s,approximate
+moE_prefill,maxfetch_256,wall_time,17.6,s,PCIe saturation
+moE_prefill,combo_d2d_plus_threads32,wall_time,19.35,s,without max-fetch
+moE_prefill,combo_all_three,wall_time,16.7,s,max-fetch with d2d and threads32
+moE_prefill,final_config,wall_time,13.6,s,only max-fetch=128
+moE_decode,before_unlock,throughput,42-58,tok/s,historical spread
+moE_decode,after_tuning,throughput,59.5-60.6,tok/s,3 samples
+dense_prefill,ub1024_175W,throughput,1125,tok/s,28952 tokens 25.7s
+dense_prefill,ub512_175W,throughput,1143,tok/s,26951 tokens 23.6s
+dense_prefill,ub2048_175W,result,crash,-,CUDA error ggml-cuda.cu:107
+dense_prefill,stock_80W,throughput,757,tok/s,historical baseline
+dense_decode,stock_80W,throughput,41.1-41.6,tok/s
+dense_decode,175W,throughput,45.9,tok/s
+hardware,gpu,model,RTX 4080 Laptop 12GB,-
+hardware,gpu,pcie_link,Gen4 x8,-
+hardware,gpu,pcie_capability,Gen4 x16,-
+hardware,cpu,model,Ryzen 9 7945HX3D,-
+hardware,cpu,cores_threads,16/32,-
+hardware,ram,spec,DDR5-5200 32GB,-
+software,os,version,Ubuntu 24.04.4 LTS,-
+software,kernel,version,7.0.0-31-generic,-
+software,driver,version,580.178.04,-
+software,engine_a,name,FreeToken,-
+software,engine_b,name,PrismML llama.cpp fork prism-b10743 (Ternary Bonsai 2 27B PTQ1_0),-
+software,engine_c,name,PrismML llama.cpp fork prism-b10743 (Qwen3.6-35B-A3B MTP),-
+cpp_decode,mtp_final_short,throughput,72.37,tok/s,256-token temp=0 cache_prompt=false; drafted 134 accepted 112 (83.6%)
+cpp_decode,mtp_final_long,throughput,66.55,tok/s,drafted 212 accepted 148 (69.8%)
+cpp_decode,mtp_final_list,throughput,64.94,tok/s,drafted 118 accepted 74 (62.7%)
+cpp_decode,single_shot_check,throughput,67.18,tok/s,long prompt; drafted 212 accepted 148 (69.8%)
+cpp_decode,mtp_off_historical,throughput,44.6-45.8,tok/s,before MTP enabled
+cpp_decode,mtp_on_earlier_config,throughput,55.15-55.71,tok/s,long/short; before n-cpu-moe 28 consolidation
+cpp_multimodal,cpu_mmproj,latency,30.1,s,image Q&A incl thinking; BF16 projector on CPU; correct answer
+cpp_streaming,gateway_fixed,first_chunk,0.27,s,SSE via OpenAI-compatible gateway
+cpp_streaming,gateway_fixed,total_time,4.6,s,SSE via gateway
+cpp_streaming,gateway_before_fix,first_chunk,36.7,s,8KiB read-buffering pitfall
+cpp_streaming,direct_engine,first_chunk,0.66,s,direct 8096
+engine_compare,freeetoken_35b_decode,throughput,34.15,tok/s,same laptop
+engine_compare,freeetoken_35b_prefill_155k,wall_time,92,s,historical
+engine_compare,llamacpp_35b_prefill_155k,wall_time,210,s,historical; not re-measured on final config
+bonsai_pack,ptq1_0_decode,throughput,51.3,tok/s,900-token x3 median; prism-b10743; np1 cache-ram 24576
+bonsai_pack,pq2_0_decode,throughput,47.0,tok/s,same protocol same day
+bonsai_pack,ptq1_0_prefill_42k,throughput,975,tok/s,42876 tokens 44.7s cold
+bonsai_pack,pq2_0_prefill_42k,throughput,992,tok/s,42885 tokens 44.0s cold
+bonsai_pack,equiv_fixed_seed,result,prefix-identical,-,then diverges in wording; greedy seed fixed; kernel numerics
+bonsai_kv,ptq1_0_192k,boot,pass,-,VRAM 10310 MiB
+bonsai_kv,ptq1_0_224k,boot,pass,-,VRAM 11046 MiB; deployed
+bonsai_kv,ptq1_0_256k,boot,pass,-,VRAM 11782 MiB; model max 262144
+bonsai_kv,pq2_0_192k,boot,pass,-,VRAM 11454 MiB
+bonsai_prompt,ptq1_0_136k,throughput,536,tok/s,136032 tokens 255.6s; at 160K config
+bonsai_prompt,pq2_0_136k,result,fail,-,HTTP 500 above ~130K; compute buffers
+bonsai_prompt,ptq1_0_180k,throughput,441,tok/s,180018 tokens 409.6s; at 192K config
+bonsai_prompt,ptq1_0_200k,throughput,408,tok/s,200017 tokens 492.2s cache_hit 0%; at 224K config
+reasoning_bonsai,budget_1500,thinking_chars,3841,chars,vs 23132 unbudgeted on same prompt
+reasoning_bonsai,soft_close,observed,yes,-,budget message injected verbatim before forced end-of-think
+provenance,llamacpp,source,ggml-org/llama.cpp (MIT),-
+provenance,prismml_fork,source,PrismML-Eng/llama.cpp (MIT; fork of ggml-org/llama.cpp),-
+provenance,bonsai_gguf,source,prism-ml/Ternary-Bonsai-2-27B-gguf (Apache-2.0),-
+provenance,qwen_moe,source,Qwen/Qwen3.6-35B-A3B (Apache-2.0),-
+provenance,qwen_dense,source,Qwen/Qwen3.8-27B (Apache-2.0),-
+provenance,cpp_mtp_gguf,source,unsloth/Qwen3.6-35B-A3B-MTP-GGUF (UD-Q4_K_XL),-
+provenance,engine_a,source,FlashML-org/FreeToken (Apache-2.0),-
+provenance,msi_ec,source,BeardOverflow/msi-ec (GPL-2.0),-
+cpp_ctx,llamacpp_mtp_nmax3_16k,prefill,693.3,tok/s,"random filler, fixed seed, cache_prompt=false (full re-prefill)"
+cpp_ctx,llamacpp_mtp_nmax3_16k,decode,76.08,tok/s,MTP acceptance 95.5%
+cpp_ctx,llamacpp_mtp_nmax3_48k,prefill,656.2,tok/s,
+cpp_ctx,llamacpp_mtp_nmax3_48k,decode,70.29,tok/s,MTP acceptance 93.5%
+cpp_ctx,llamacpp_mtp_nmax3_96k,prefill,609.9,tok/s,
+cpp_ctx,llamacpp_mtp_nmax3_96k,decode,60.15,tok/s,MTP acceptance 90.3%
+cpp_ctx,llamacpp_mtp_nmax3_144k,prefill,577.3,tok/s,
+cpp_ctx,llamacpp_mtp_nmax3_144k,decode,55.52,tok/s,MTP acceptance 88.1%
+cpp_ctx,llamacpp_mtp_nmax2_158k,prefill,577.2,tok/s,"158091-token prompt end-to-end; engine reported truncated=0"
+cpp_ctx,llamacpp_mtp_nmax2_158k,decode,49.52,tok/s,"MTP n-max 2 at the time; acceptance 97.7%"
+cpp_ab,spec_draft_n_max_2_to_3,decode_delta_16k,5.2,%,72.33 to 76.08 tok/s
+cpp_ab,spec_draft_n_max_2_to_3,decode_delta_48k,8.8,%,64.61 to 70.29 tok/s
+cpp_ab,spec_draft_n_max_2_to_3,decode_delta_96k,6.9,%,56.27 to 60.15 tok/s
+cpp_ab,spec_draft_n_max_2_to_3,decode_delta_144k,10.2,%,50.39 to 55.52 tok/s
+cpp_ab,spec_draft_n_max_3,vram_delta,24,MiB,"10868 to 10892 MiB"
+cpp_limit,n_cpu_moe_24,boot,OOM,-,"failed to create context at 160K ctx; --n-cpu-moe 28 is the hard edge on 12 GB"
+cpp_limit,llamacpp_mtp_160k,longest_prompt_ok,158091,tokens,"zero truncation (context occupied 158346 tokens)"
+bonsai_ctx,bonsai_ptq1_256k_85pct,prompt,222729,tokens,85.0% of 262144 (model max)
+bonsai_ctx,bonsai_ptq1_256k_85pct,prefill,376.1,tok/s,cold cache (592 s)
+bonsai_ctx,bonsai_ptq1_256k_85pct,decode,16.14,tok/s,"256-token answer; depth decay 51.3 short -> 16.1"
+bonsai_ctx,bonsai_ptq1_256k_85pct,wall,608.1,s,"zero truncation (n_tokens 222984)"
+bonsai_ctx,bonsai_ptq1_256k_85pct,vram,11782,MiB,"83 MiB free; KV pre-allocated, stable across the run"
+bonsai_ctx,bonsai_ptq1_224k,decode_at_depth,25,tok/s,~100K-context class (production observation)
+igpu,radeon_raphael,vram_uma_ceiling,512,MiB,display adapter only (idle ~31 MiB used)
+igpu,radeon_raphael,gtt_addressable,15626,MiB,system RAM the iGPU can address
+igpu,radeon_raphael,usable_by_engines,no,-,"both engines are CUDA-only builds (no Vulkan/ROCm backend)"
+ik_matrix,ik_m28_16k,prefill,899.5,tok/s,fixed seed + tokenize-calibrated + cache_prompt=false; spec n_max=3 + mtprot q8_0
+ik_matrix,ik_m28_16k,decode,90.59,tok/s,MTP acceptance 98.4%
+ik_matrix,ik_m28_16k,wall,20.7,s,256-token output
+ik_matrix,ik_m28_48k,prefill,861.1,tok/s,same protocol
+ik_matrix,ik_m28_48k,decode,78.62,tok/s,MTP acceptance 94.5%
+ik_matrix,ik_m28_48k,wall,59.4,s,
+ik_matrix,ik_m28_96k,prefill,788.3,tok/s,same protocol
+ik_matrix,ik_m28_96k,decode,62.14,tok/s,MTP acceptance 93.5%
+ik_matrix,ik_m28_96k,wall,126.8,s,
+ik_matrix,ik_m28_144k,prefill,731.6,tok/s,same protocol
+ik_matrix,ik_m28_144k,decode,53.57,tok/s,MTP acceptance 92.1%
+ik_matrix,ik_m28_144k,wall,203.0,s,
+ik_vs_prism,prefill_delta,delta,+27..31,%,"vs PrismML fork prism-b10743, 16K-144K (spec-level independent)"
+ik_vs_prism,wall_delta,delta,-22..27,%,"same requests, 256-token outputs"
+ik_vs_prism,prefill_delta_upstream,delta,+30..33,%,vs upstream llama.cpp on the same box
+ik_decode_fair,48k_all_n3,decode,78.62,tok/s,ik; PrismML re-run (n=3) 75.04; upstream (n=3) 74.15 -> +5% / +6%
+ik_mtp,n_max_1,decode,57.09,tok/s,acceptance 99.2%
+ik_mtp,n_max_2,decode,65.27,tok/s,acceptance 94.9%
+ik_mtp,n_max_3,decode,77.32,tok/s,acceptance 94.5%
+ik_mtp,n_max_3_mtprot_q8_0,decode,78.38,tok/s,deployed; +37% vs n_max=1
+ik_ctx,ik_256k,boots,11276,MiB,boots but 235K prompt -> flash-attn OOM; -ub 256 fails to load: unusable
+ik_ctx,ik_240k,boots,11292,MiB,990 free at load; 156K prompt -> OOM: unusable
+ik_ctx,ik_160k,boots,10754,MiB,deployed; 1528 MiB spare
+ik_ctx,ik_160k,max_prompt_ok,158091,tokens,96.5% of 163840; prefill 738.4 tok/s; truncated=0
+ik_moe_scan,m28,vram_at_load,10754,MiB,the only usable split at 160K; decode 53.2 tok/s at 158K
+ik_moe_scan,m26,vram_at_load,11678,MiB,+924 MiB; 158K prompt -> prefill OOM: unusable
+ik_moe_scan,m24,vram_at_load,-,-,KV cache cannot be allocated at 160K: unusable
