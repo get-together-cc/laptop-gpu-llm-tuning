@@ -1,0 +1,50 @@
+category,config,metric,value,unit,notes
+power,stock,current_power_limit,80,W,base TGP as shipped on Linux
+power,stock,default_power_limit,80,W
+power,stock,max_power_limit,175,W,hardware capability
+power,stock,sm_clock_steady,1230-1335,MHz,under sustained load
+power,stock,power_draw_load,79.7-80.2,W,pinned at the wall
+power,stock,temperature,54-61,C
+power,after_nvidia_powerd,current_power_limit,105,W,base + 25W Dynamic Boost
+power,after_msi_ec_turbo,current_power_limit,150,W,EC shift mode = turbo
+power,after_sustained_load,current_power_limit,175,W,ceiling reached
+power,after_full_unlock,sm_clock_steady,2400,MHz
+power,after_full_unlock,power_draw_load,145-148,W
+power,after_full_unlock,temperature,65-72,C
+power,cooler_boost_on,peak_temperature,78,C,forced max fan
+power,cooler_boost_off,peak_temperature,76,C,EC automatic curve
+power,cooler_boost_on,peak_power,166,W
+power,cooler_boost_off,peak_power,147,W
+power,clock_lock_reverted,idle_power_locked,35,W,with -lgc clock floor
+power,clock_lock_reverted,idle_power_default,7,W,without clock lock
+moE_prefill,baseline_auto,wall_time,20.8,s,42K-token cold prompt
+moE_prefill,baseline_auto,throughput,2000,tok/s,approximate
+moE_prefill,maxfetch_64,wall_time,16.7,s
+moE_prefill,maxfetch_128_run1,wall_time,14.2,s
+moE_prefill,maxfetch_128_run2,wall_time,12.7,s
+moE_prefill,maxfetch_128_run3,wall_time,13.7,s
+moE_prefill,maxfetch_128_run4,wall_time,13.7,s
+moE_prefill,maxfetch_128,throughput,3090,tok/s,approximate
+moE_prefill,maxfetch_256,wall_time,17.6,s,PCIe saturation
+moE_prefill,combo_d2d_plus_threads32,wall_time,19.35,s,without max-fetch
+moE_prefill,combo_all_three,wall_time,16.7,s,max-fetch with d2d and threads32
+moE_prefill,final_config,wall_time,13.6,s,only max-fetch=128
+moE_decode,before_unlock,throughput,42-58,tok/s,historical spread
+moE_decode,after_tuning,throughput,59.5-60.6,tok/s,3 samples
+dense_prefill,ub1024_175W,throughput,1125,tok/s,28952 tokens 25.7s
+dense_prefill,ub512_175W,throughput,1143,tok/s,26951 tokens 23.6s
+dense_prefill,ub2048_175W,result,crash,-,CUDA error ggml-cuda.cu:107
+dense_prefill,stock_80W,throughput,757,tok/s,historical baseline
+dense_decode,stock_80W,throughput,41.1-41.6,tok/s
+dense_decode,175W,throughput,45.9,tok/s
+hardware,gpu,model,RTX 4080 Laptop 12GB,-
+hardware,gpu,pcie_link,Gen4 x8,-
+hardware,gpu,pcie_capability,Gen4 x16,-
+hardware,cpu,model,Ryzen 9 7945HX3D,-
+hardware,cpu,cores_threads,16/32,-
+hardware,ram,spec,DDR5-5200 32GB,-
+software,os,version,Ubuntu 24.04.4 LTS,-
+software,kernel,version,7.0.0-31-generic,-
+software,driver,version,580.178.04,-
+software,engine_a,name,FreeToken,-
+software,engine_b,name,PrismML llama.cpp fork prism-b10709-9a9394a,-
